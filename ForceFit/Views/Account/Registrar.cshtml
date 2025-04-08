@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h2>Registrar</h2>
+
+<form asp-action="Registrar" method="post">
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" required />
+    </div>
+    <div>
+        <label>Senha:</label>
+        <input type="password" name="senha" required />
+    </div>
+    <div>
+        <label>Tipo de Usuário:</label>
+        <select name="role" required>
+            <option value="Aluno">Aluno</option>
+            <option value="Personal">Personal</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Registrar</button>
+    </div>
+</form>
+
+@if (ViewBag.Erro != null)
+{
+    <p style="color: red;">@ViewBag.Erro</p>
+}
+@if (TempData["Sucesso"] != null)
+{
+    <p style="color: green;">@TempData["Sucesso"]</p>
+}
+
+<p>
+    Já tem uma conta? <a asp-action="Login">Entrar</a>
+</p>

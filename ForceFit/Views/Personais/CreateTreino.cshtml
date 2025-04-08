@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Criar Treino";
+    var exercicios = ViewBag.Exercicios as List<ForceFit.Models.Exercicio>;
+    var alunos = ViewBag.Alunos as List<ForceFit.Models.Aluno>;
+    int personalId = ViewBag.PersonalId;
+}
+
+<h2 class="titulo">Criar Novo Treino</h2>
+
+<form asp-action="CreateTreino" method="post" class="form-treino">
+    <input type="hidden" name="personalId" value="@personalId" />
+
+    <div class="form-group">
+        <label for="nomeTreino">Nome do Treino</label>
+        <input type="text" class="form-control" id="nomeTreino" name="nomeTreino" required />
+    </div>
+
+    <div class="form-group">
+        <label for="alunoId">Aluno</label>
+        <select class="form-control" id="alunoId" name="alunoId" required>
+            <option value="">Selecione um aluno</option>
+            @foreach (var aluno in alunos)
+            {
+                <option value="@aluno.AlunoID">@aluno.NomeAluno</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Exercícios (Selecione no mínimo 4)</label>
+        @foreach (var ex in exercicios)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="exercicioIds" value="@ex.ExercicioID" id="ex-@ex.ExercicioID" />
+                <label class="form-check-label" for="ex-@ex.ExercicioID">@ex.NomeExercicio</label>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-success">Salvar Treino</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mt-3">
+        @Html.ValidationSummary()
+    </div>
+}
+
+<style>
+    .form-treino {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 25px;
+        background: #f4f4f4;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .titulo {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+</style>
